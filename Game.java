@@ -42,6 +42,7 @@ public class Game{
         int aScore = 0;
         TeamName hTeamName = hTeam.getTeamName();
         TeamName aTeamName = aTeam.getTeamName();
+        boolean printDetails = false;
         
 
         Player[]  hPlayers = new Player[hTeam.getPlayers().length];
@@ -169,10 +170,13 @@ public class Game{
                     //System.out.println("Best GK on " + hTeam + " is " + best.getPlayerName());
                 }
             }
-            System.out.println("Home Starting 11:");
-            for(int i = 0; i<11; i++ ){//Print home starting 11
-                System.out.println(homeFirstEleven[i].getPlayerName());
+            if(printDetails){
+                System.out.println("Home Starting 11:");
+                for(int i = 0; i<11; i++ ){//Print home starting 11
+                    System.out.println(homeFirstEleven[i].getPlayerName());
+                }
             }
+            
 
 
             //AWAY STARTING 11
@@ -275,16 +279,20 @@ public class Game{
                     //System.out.println("Best GK on " + hTeam + " is " + best.getPlayerName());
                 }
             }
-            System.out.println("Away Starting 11:");
-            for(int i = 0; i<11; i++ ){//Print away starting 11
-                System.out.println(awayFirstEleven[i].getPlayerName());
+            if(printDetails){
+                System.out.println("Away Starting 11:");
+                for(int i = 0; i<11; i++ ){//Print away starting 11
+                    System.out.println(awayFirstEleven[i].getPlayerName());
+                }
             }
+            
 
 
         while(time <= (90 + extraTime)){
             //Add a delay here for realism, 1 second per minute or something
-
-            System.out.println(time + "minute; " + hTeamName + " " + hScore + " : " + aScore + " " + aTeamName);
+            if(printDetails){
+                System.out.println(time + "minute; " + hTeamName + " " + hScore + " : " + aScore + " " + aTeamName);
+            }
             time++;
 
             //Always print lines above
@@ -322,10 +330,14 @@ public class Game{
                     oddsToScore = oddsToShoot*(finishing*2);//Change this 3 to their conversion rate, gk ability, form, morale, etc
                     float score = rand.nextInt(1000) + oddsToScore;
                     if(score>=850){
-                        System.out.println(homeFirstEleven[i].getPlayerName()+ " scored a goal for " + hTeam.getTeamName() + "!!");
+                        if(printDetails){
+                            System.out.println(homeFirstEleven[i].getPlayerName()+ " scored a goal for " + hTeam.getTeamName() + "!!");
+                        }
                         hScore++;
                     }else{
-                        System.out.println(homeFirstEleven[i].getPlayerName()+ " shot for " + hTeam.getTeamName() + " was saved :(");
+                        if(printDetails){
+                            System.out.println(homeFirstEleven[i].getPlayerName()+ " shot for " + hTeam.getTeamName() + " was saved :(");
+                        }
                     }
                 }
             }
@@ -342,10 +354,14 @@ public class Game{
                     oddsToScore = oddsToShoot*(finishing*2);//Change this 3 to their conversion rate, gk ability, form, morale, etc
                     float score = rand.nextInt(1000) + oddsToScore;
                     if(score>=850){
-                        System.out.println(awayFirstEleven[i].getPlayerName()+ " scored a goal for " + aTeam.getTeamName() + "!!");
+                        if(printDetails){
+                            System.out.println(awayFirstEleven[i].getPlayerName()+ " scored a goal for " + aTeam.getTeamName() + "!!");
+                        }
                         aScore++;
                     }else{
-                        System.out.println(awayFirstEleven[i].getPlayerName()+ " shot for " + aTeam.getTeamName() + " was saved :(");
+                        if(printDetails){
+                            System.out.println(awayFirstEleven[i].getPlayerName()+ " shot for " + aTeam.getTeamName() + " was saved :(");
+                        }
                     }
                 }
             }
@@ -369,4 +385,8 @@ public class Game{
     public Team getAwayTeam(){
         return this.aTeam;
     }
+    public int getResult(){
+        return this.result;
+    }
+
 }

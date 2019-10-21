@@ -13,16 +13,14 @@ import java.util.*;
 //import javafx.util.ArrayList; 
 
 public class Schedule{
-    private int[][] schedule;
-    private int leagueSize;
+    private Team[][][] schedule;
     private static Random rand;
     
-    public Schedule(int leagueSize, int[][] schedule){
+    public Schedule(Team[][][] schedule){
         this.schedule = schedule;
-        this.leagueSize = leagueSize;
     }
 
-    public static Schedule genSchedule(int leagueSize){
+    public static Team[][][] genSchedule(int leagueSize, Team[] teamArray){
         int[][] firstHalf = new int[(leagueSize/2)*(leagueSize-1)][2];
         int[][] half = new int[(leagueSize/2)*(leagueSize-1)][2];
         int index = 0;
@@ -38,17 +36,17 @@ public class Schedule{
             }
         }
         int[][] copy = new int[(leagueSize/2)*(leagueSize-1)][2];
-System.out.println(copy.length);
         boolean broken = false;
         copy = half.clone();
 
         int[][] week = new int[leagueSize/2][2];
-        int[][][] total = new int[(leagueSize/2)*(leagueSize-1)][leagueSize/2][2];
+        int[][][] total = new int[leagueSize-1][leagueSize/2][2];
         int totalIndex = 0;
         int nine = 0;
         rand = new Random();
-        while(nine<9){//Maybe this could do it until its done for the first half
-
+        while(nine<leagueSize-1){//Maybe this could do it until its done for the first half
+            int[][] copy2 = new int[(leagueSize/2)*(leagueSize-1)][2];
+            copy2=copy.clone(); //Clones copy before it goes in and removes for the week
             int c = 0;
             week = new int[leagueSize/2][2];
 
@@ -57,73 +55,99 @@ System.out.println(copy.length);
             int[] teams = new int[leagueSize];//make an array of the teams to check they play once per week
             for(int i=0; i<leagueSize; i++){
                 teams[i] = i;
-
             }
-        int count = 0;
-
+            int count = 0;
             while(c<(leagueSize/2)){//Makes schedule for one week
-                int[][] copy2 = new int[(leagueSize/2)*(leagueSize-1)][2];
-                copy2=copy.clone();
-                
-
+                //System.out.println("HUH");
                 if(copy.length==0){
                     break;
                 }
 
                 if(contains(teams,copy[p][0]) && contains(teams,copy[p][1])){
-
                     count = 0;
-
                     week[c][0]=copy[p][0];
                     week[c][1]=copy[p][1];
-                    
                     teams = removeS(teams, week[c][0]);
                     teams = removeS(teams, week[c][1]);
-
-                    System.out.println("Added to week P = " + p);
-                    System.out.println("[" + week[c][0] + ", " + week[c][1] + "]");
-
+                    //System.out.println("Added to week P = " + p);
+                    //System.out.println("[" + week[c][0] + ", " + week[c][1] + "]");
                     copy=remove(copy, p);
-
                     c++;
                 }
-                p = rand.nextInt(copy.length);
+                //System.out.println("Copy: "+copy.length);
+                if(copy.length!=0){
+                    p = rand.nextInt(copy.length);
+                }
+                
                 count ++;
                 if(count>200){
                     broken = true;
-                    System.out.println("Broked");
+                    //System.out.println("Broked");
+                    copy = new int[(leagueSize/2)*(leagueSize-1)][2];
+                    copy=copy2.clone(); //Resets copy to before it started to try to schedule the week
                     break;
                 }
-                copy = new int[(leagueSize/2)*(leagueSize-1)][2];
-                copy=copy2.clone();
                 //System.out.println("Pinnie = "+ p);
             }
-            if(total.length==8 && broken){//Retry until it works sorry
+            if (!broken){
+                //System.out.println("Week: " + nine);
+                total[nine] = week;
+                nine++;
+                for (int j = 0; j<week.length; j++){
+                    //System.out.println(week[j][0]+ " : " +week[j][1]);
+                }
+            }
+            if(total[leagueSize-2]!=null && broken){//Retry until it works sorry
                 broken = false;
                 copy = new int[(leagueSize/2)*(leagueSize-1)][2];
-                copy = half.clone();
+                copy = half.clone();//Completely resets copy to the original full array of games
                 //System.out.println("Copy length = " + copy.length);
                 //copy=rando(copy);
                 week = new int[leagueSize/2][2];
-                total = new int[(leagueSize/2)*(leagueSize-1)][leagueSize/2][2];
-                totalIndex = 0;
+                total = new int[leagueSize-1][leagueSize/2][2];
+                //totalIndex = 0;
                 nine = 0;
             }
-            for(int i = 0; i<week.length; i++){
-                //System.out.println("[" + week[i][0] + ", " + week[i][1] + "]");
-            }
-            System.out.println("AIGHT");
-            total[totalIndex] = week;
-            totalIndex++;
-            System.out.println(copy.length);
-            if (!broken){
-                nine++;
+
+            //System.out.println("Total: " + total.length);
+            //System.out.println("Total: " + week.length);
+            
+        }
+        for(int i=0; i<total.length; i++){
+            //System.out.println("Week " + i);
+            for (int j = 0; j<total[i].length; j++){
+                for(int k = 0; k<total[i][j].length; k++){
+                    //System.out.println(total[i][j][k]);
+                }
             }
         }
-
-        Schedule e = new Schedule(leagueSize, week);
-        return e;
+        Team[][][] converted = new Team[total.length][total[0].length][2];
+        converted = convert(total, teamArray);//fix
+        //Schedule e = new Schedule(converted);
+        /*for(int i=0; i<converted.length; i++){
+            System.out.println("Week " + i);
+            for (int j = 0; j<converted[i].length; j++){
+                for(int k = 0; k<converted[i][j].length; k++){
+                    System.out.println(converted[i][j][k].getTeamName());
+                }
+            }
+        }
+        */
+        return converted;
     }
+
+    //This will convert the schedule of numbers to Teams
+    public static Team[][][] convert(int[][][] sked, Team[] teams){
+        Team[][][] convertee = new Team[sked.length][sked[0].length][2];
+        for(int i=0; i<sked.length; i++){
+            for (int j = 0; j<sked[i].length; j++){
+                for(int k = 0; k<sked[i][j].length; k++){
+                    convertee[i][j][k] = teams[sked[i][j][k]];
+                }
+            }
+        }
+        return convertee;
+    } 
 
     public static int[][] remove(int[][] arr, int index) 
     { 
@@ -207,5 +231,9 @@ System.out.println(copy.length);
 		}
  
 		return array;
-	}
+    }
+    
+    public Team[][][] getSchedule(){
+        return this.schedule;
+    }
 }
