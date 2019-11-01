@@ -9,18 +9,27 @@ package Fm;
 */
 import java.util.Random;
 import java.util.*; 
+import java.util.Map;
+import java.util.LinkedHashMap;
 //import org.apache.commons.lang.ArrayUtils;
 //import javafx.util.ArrayList; 
 
 public class Schedule{
     private Team[][][] schedule;
     private static Random rand;
+    private int leagueSize;
     
-    public Schedule(Team[][][] schedule){
+    public Schedule(Team[][][] schedule, int leagueSize){
         this.schedule = schedule;
+        this.leagueSize = leagueSize;
     }
 
-    public static Team[][][] genSchedule(int leagueSize, Team[] teamArray){
+    public static Schedule genSchedule(League league){
+        //League league = new League.genLeague("BPL", 20)
+        Team[] teamArray;
+        teamArray = league.getTeams();
+        int leagueSize;
+        leagueSize = teamArray.length;
         int[][] firstHalf = new int[(leagueSize/2)*(leagueSize-1)][2];
         int[][] half = new int[(leagueSize/2)*(leagueSize-1)][2];
         int index = 0;
@@ -133,7 +142,8 @@ public class Schedule{
             }
         }
         */
-        return converted;
+        Schedule e = new Schedule(converted, leagueSize);
+        return e;
     }
 
     //This will convert the schedule of numbers to Teams
@@ -236,4 +246,9 @@ public class Schedule{
     public Team[][][] getSchedule(){
         return this.schedule;
     }
+    
+    public int getLeagueSize(){
+        return this.leagueSize;
+    }
+    
 }

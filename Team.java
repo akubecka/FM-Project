@@ -18,10 +18,12 @@ public class Team{
     private Player players[];
     private static Random rand;
     private TeamName name;//Change int to String when you wanna come up with a bunch of names
+    private TeamStats teamStats;
 
-    public Team(TeamName name, Player players[]){
+    public Team(TeamName name, Player players[], TeamStats teamStats){
         this.players = players;
         this.name = name;
+        this.teamStats = teamStats;
     }
 
     public static Team genTeam(){
@@ -43,15 +45,22 @@ public class Team{
         for(int i=11; i<max;i++){//Generate the number of players for the team
             players[i]=Player.genPlayer(i);
         }
-        Team e = new Team(name, players);
+        TeamStats teamStats = TeamStats.genTeamStats(0, name, 0, 0, 0); //Initialize teamStats(place, name, points, goalsFor, goalsAgainst);
+        Team e = new Team(name, players, teamStats);
         return e;
     }
-
+    public static Team updateTeam(TeamName name, Player players[], TeamStats teamStats){
+        Team e = new Team(name, players, teamStats);
+        return e;
+    }
     public TeamName getTeamName(){//Change int to String when you wanna come up with a bunch of names
         return this.name;
     }
     public Player[] getPlayers(){
         return this.players;
+    }
+    public TeamStats getTeamStats(){
+        return this.teamStats;
     }
 }
 
