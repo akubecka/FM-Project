@@ -40,7 +40,7 @@ public class Game{
     }
 
     public static Game genGame(Team hTeam, Team aTeam){
-        boolean printDetails = false;//Print out the game details or nah
+        boolean printDetails = true;//Print out the game details or nah
 
         int time = 0;
         int extraTime = 0;//Make a formula for this

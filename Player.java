@@ -26,14 +26,17 @@ public class Player{
     private PlayerName name;
     private int height;
     private int weight;
+    private PlayerStats playerStats;
     //Number is the number they are on the team that calls this function
-    public Player(PlayerName name, Position position, Map<String, Integer> attributes, int number, int height, int weight){
+    public Player(PlayerName name, Position position, Map<String, Integer> attributes, 
+    int number, int height, int weight, PlayerStats playerStats){//Add PlayerStats class
         this.name = name;
         this.position = position;
         this.attributes = attributes;
         this.number = number;
         this.height = height;
         this.weight = weight;
+        this.playerStats = playerStats;
     }
 
     public static Player genPlayer(int number){
@@ -48,8 +51,8 @@ public class Player{
         attr.put("Finishing", rand.nextInt(9)+1);
         attr.put("Pace", rand.nextInt(9)+1);
 
-        
-        Player e = new Player(name, Position.randomPos(), attr, number, height, weight);
+        PlayerStats playerStats = PlayerStats.genPlayerStats(0, 0, 0, 0, 0);
+        Player e = new Player(name, Position.randomPos(), attr, number, height, weight, playerStats);
         return e;
     }
     public static Player genPlayerWithPos(int number, Position position){
@@ -89,6 +92,9 @@ public class Player{
     }
     public int getPlayerWeight(){
 		return this.weight;
+    }
+    public PlayerStats getPlayerStats(){
+      return this.playerStats;
     }
     
 }

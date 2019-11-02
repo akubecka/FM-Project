@@ -1,10 +1,6 @@
 package Fm;
 //Generates league table
 
-import java.util.Map;
-import java.util.LinkedHashMap;
-import java.util.HashMap;
-import java.util.Arrays; 
 
 public class TeamStats{
     private int place;

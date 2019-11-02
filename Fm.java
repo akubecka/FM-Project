@@ -1,5 +1,7 @@
 package Fm;
 
+import java.util.Scanner;
+
 public class Fm{
     public static void main(String[] args){
         //LEAGUE SIZE MUST BE AN EVEN NUMBER >= 4
@@ -10,7 +12,10 @@ public class Fm{
             Put that into schedule and generate schedule
             Then run season using schedule
         */
-        final int leagueSize = 14;
+        Scanner myObj = new Scanner(System.in);  // Create a Scanner object
+        System.out.println("Enter leagueSize: ");
+        int leagueSize = myObj.nextInt();  // Read user input
+        //final int leagueSize = 14;
         League league;
         league = League.genLeague("BPL", leagueSize);
         Team[] teamArray;

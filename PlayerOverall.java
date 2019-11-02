@@ -12,10 +12,10 @@ package Fm;
 import java.util.Map;
 import java.util.LinkedHashMap;
 public class PlayerOverall{
-    private Player player;
+    //private Player player;
 
-    public PlayerOverall(Player player){
-        this.player = player;
+    public PlayerOverall(/*Player player*/){
+        //this.player = player;
     }
 
     public static int genOverall(Player player){
