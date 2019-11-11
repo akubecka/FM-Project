@@ -51,7 +51,7 @@ public class Player{
         attr.put("Finishing", rand.nextInt(9)+1);
         attr.put("Pace", rand.nextInt(9)+1);
 
-        PlayerStats playerStats = PlayerStats.genPlayerStats(0, 0, 0, 0, 0);
+        PlayerStats playerStats = PlayerStats.genPlayerStats(0, 0, 0, 0);
         Player e = new Player(name, Position.randomPos(), attr, number, height, weight, playerStats);
         return e;
     }
@@ -67,8 +67,8 @@ public class Player{
         attr.put("Finishing", rand.nextInt(9)+1);
         attr.put("Pace", rand.nextInt(9)+1);
 
-        
-        Player e = new Player(name, position, attr, number, height, weight);
+        PlayerStats playerStats = PlayerStats.genPlayerStats(0, 0, 0, 0);
+        Player e = new Player(name, position, attr, number, height, weight, playerStats);
         return e;
     }
     

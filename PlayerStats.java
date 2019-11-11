@@ -21,9 +21,12 @@ public class PlayerStats{
 
     public static PlayerStats genPlayerStats(int playerGamesPlayed, int playerGoalsScored,
     int playersGoalsAgainst, int playersShots){//Size is how many teams in league
-
+        float num = 0;
+        if(playerGoalsScored!=0 && playersShots!=0){
+            num = playerGoalsScored/playersShots;
+        }
         PlayerStats e = new PlayerStats(playerGamesPlayed, playerGoalsScored,
-                    playersGoalsAgainst, playersShots, playersGoalsScored/playersShots);
+                    playersGoalsAgainst, playersShots, num);
         return e;
     }
 

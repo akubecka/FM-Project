@@ -40,7 +40,7 @@ public class Game{
     }
 
     public static Game genGame(Team hTeam, Team aTeam){
-        boolean printDetails = true;//Print out the game details or nah
+        boolean printDetails = false;//Print out the game details or nah
 
         int time = 0;
         int extraTime = 0;//Make a formula for this
@@ -339,7 +339,7 @@ public class Game{
                 oddsToShoot = (finishing/10)*positionToShot.get(homeFirstEleven[i].getPosition());
                 rand = new Random();
                 float shot = rand.nextInt(1000) + oddsToShoot;
-                if(shot>=985){
+                if(shot>=900){
                     oddsToScore = oddsToShoot*(finishing*2);//Change this 3 to their conversion rate, gk ability, form, morale, etc
                     float score = rand.nextInt(1000) + oddsToScore;
                     if(score>=850){
